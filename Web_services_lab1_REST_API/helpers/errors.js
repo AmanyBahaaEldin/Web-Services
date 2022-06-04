@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 class CustomError extends Error {
     constructor(status, code, message, details = []) {
       super(message);
@@ -9,18 +10,16 @@ class CustomError extends Error {
     }
 }
 
-///////////////////////////////////////////////////
 const createError = (code, message, details) => {
   return class CreatedError extends CustomError {
     constructor() { super(code, message, details) }
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////
-// for  errors
+// defined errors
 const errors = {
-  APP_ERR_AUTHENTICATION: createError(401, 'AUTHENTICATION_REQUIRED', 'You must login first'),
-  APP_ERR_PERMISSION: createError(401, 'PERMISSION_REQUIRED', 'You must have a permission first to access this resource'),
+  APP_ERR_AUTHENTICATION: createError(401, 'AUTHENTICATION_REQUIRED', 'You need to login'),
+  APP_ERR_PERMISSION: createError(401, 'PERMISSION_REQUIRED', 'You need a permission to access this resource'),
 }
 
 

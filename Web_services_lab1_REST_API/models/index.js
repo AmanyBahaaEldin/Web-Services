@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Schema for Users Collection
 const UserSchema = new Schema({
-   name: {
+   firstname: {
+      type: String,
+      required: true
+   },
+   lastname: {
       type: String,
       required: true
    },
@@ -11,46 +14,54 @@ const UserSchema = new Schema({
       type: String,
       required: true
    },
-   blogs: [{ 
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Blog"
-   }]
+   dob: {
+      type: Date,
+      required: true
+   },
+   isSuspended: {
+      type: Boolean,
+      required: true
+   }
 });
 
-// Schema for the Blogs Collection
-const BlogSchema = new Schema({
+const ArticleSchema = new Schema({
+   author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   },
    title: {
       type: String,
       required: true
    },
-   body: String,
-   user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User"
+   body: {
+      type: String,
+      required: true
    },
-   comments: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment"
-   }]
-})
+  
+   date: {
+      type: Date,
+      required: true
+   },
+   comments: [{ 
+      content:{
+         type: String,
+         required: true
+      },
+      user: {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "User"
+      },
+      date: {
+         type: Date,
+         required: true
+      },
+     
+   }],
+});
 
-// Schema for the Comments Collection
-const CommentSchema = new Schema({
-   body: String,
-   user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-   },
-   blog: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Blog"
-   },
-})
 
 
 const User = mongoose.model("User", UserSchema);
-const Blog = mongoose.model("Blog", BlogSchema);
-const Comment = mongoose.model("Comment", CommentSchema);
+const Article = mongoose.model("Article", ArticleSchema);
 
-module.exports = {User, Blog, Comment}
+module.exports = {User, Article}
